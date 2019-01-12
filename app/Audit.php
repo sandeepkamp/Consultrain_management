@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Audit extends Model
 {
+
+    protected $table = 'audits';
+    protected $primaryKey = 'id';
     //
     public $fillable = [
         'int_audit_plnd_date',
@@ -18,4 +21,5 @@ class Audit extends Model
         'application_actual_dt',
         'application_comment',
     ];
+
 }

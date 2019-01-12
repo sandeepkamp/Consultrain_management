@@ -6,7 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Assessment extends Model
 {
-    //
+    protected $table = 'assessments';
+    protected $primaryKey = 'id';
+
     public $fillable = [
           
         'pre_assmnt_plnd_date',

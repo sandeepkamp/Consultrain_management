@@ -10,4 +10,11 @@ class Product extends Model
         'name',
         'detail',
      ];
+
+
+     public function project_management()
+     {
+         return $this->hasMany('App\ProjectManagement','iso_product_id');
+     }
+
 }

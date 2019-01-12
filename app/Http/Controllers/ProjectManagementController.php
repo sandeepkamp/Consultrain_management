@@ -10,9 +10,29 @@ use App\Audit;
 use App\Assessment;
 use App\Payment;
 use DB;
+use App\Product;
+use App\Agency;
+
 
 class ProjectManagementController extends Controller
 {
+
+
+     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+
+    public function index()
+    {
+
+        $projectmanagements = ProjectManagement::all();
+       //dd($projectmanagements);
+        return view('projectmanagement.index', compact('projectmanagements')) ->with('i', (request()->input('page', 1) - 1) * 5);;
+
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -20,7 +40,10 @@ class ProjectManagementController extends Controller
      */
     public function create()
     {
-        return view('projectmanagement.create');
+        $customers =DB::table('customers')->select('id','cust_name')->get();
+        $products =DB::table('products')->select('id','name')->get();
+        $agencies =DB::table('agencies')->select('id','agency_name')->get();
+        return view('projectmanagement.create', compact('customers','products','agencies'));
     }
 
   /**
@@ -32,7 +55,7 @@ class ProjectManagementController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request);
+       // dd($request);
         $rules = [
             'customer_id' => 'required',
             'iso_product_id' => 'required',
@@ -45,8 +68,9 @@ class ProjectManagementController extends Controller
         $this->validate($request, $rules);
 
         $data = $request->all();
-     
+        //dd($data);
         $projectmanagement = ProjectManagement::create($data);
+       // dd( $projectmanagement);
         $management_id = $projectmanagement->id;
         $documentid = $this->document($management_id,$request);
         $implementationid = $this->implementation($management_id,$request);
@@ -175,11 +199,9 @@ class ProjectManagementController extends Controller
       
         //dd($internalaudit);
         $payment->save();
+        return redirect()->route('projectmanagement.index')
+            ->with('success','Product created successfully.');
     }
-
-
-
-
 
      /**
      * Show the form for editing the specified resource.
@@ -187,8 +209,63 @@ class ProjectManagementController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($management_id)
+    public function edit($id)
     {
+
+        $projectmanagement = ProjectManagement::findOrFail($id);
+       // dd($projectmanagement);
+        $documentation = Documentation::findOrFail($id);
+        $implementation = Implementation::findOrFail($id);
+        $audit = Audit::findOrFail($id);
+        $assessment = Assessment::findOrFail($id);
+        $payment =Payment::findOrFail($id);
+       // dd($audit);
+        return view('projectmanagement.edit', compact('projectmanagement','documentation','implementation','audit','assessment','payment'));
        
     }
+
+     /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    
+    public function update(Request $request , $id){
+     
+        $projectmanagement= ProjectManagement::findOrFail($id);
+        $rules = [
+            'customer_id' => 'required',
+            'iso_product_id' => 'required',
+            'agency_id' => 'required',
+            'order_no' => 'required',
+            'order_amount' => 'required',
+            'order_date' => 'required',
+        ];
+
+        $this->validate($request, $rule);
+        $projectmanagement->update($request->all());
+       
+    }
+
+   /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $projectmanagement= ProjectManagement::findOrFail($id);
+       // dd($projectmanagement);
+        $documentation = Documentation::findOrFail($id);
+        $implementation = Implementation::findOrFail($id);
+        $audit = Audit::findOrFail($id);
+        $assessment = Assessment::findOrFail($id);
+        $payment =Payment::findOrFail($id);
+        // dd($cust_id);
+        return view('projectmanagement.show', compact('projectmanagement','documentation','implementation','audit','assessment','payment'));
+    }
+
 }

@@ -18,4 +18,10 @@ class Customer extends Model
         'contact_person_name',
         'contact_person_number',
     ];
+
+
+    public function project_management()
+    {
+        return $this->hasMany('App\ProjectManagement','customer_id');
+    }
 }

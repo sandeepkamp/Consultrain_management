@@ -16,4 +16,10 @@ class Agency extends Model
         'state',
         'country',
     ];
+
+
+    public function project_management()
+    {
+        return $this->hasMany('App\ProjectManagement','agency_id');
+    }
 }

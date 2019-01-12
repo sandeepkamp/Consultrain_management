@@ -123,6 +123,7 @@
                         <ul class="submenu-angle" aria-expanded="false">
                             <!-- <li><a title="ISO Service List" href="{{ route('projectmanagement.index') }}"><img src="{{asset('img/sidebar/show-all-service.png')}}" alt="" style="padding: 8px;"><span class="mini-click-non">Show All Projects</span></a></li> -->
                             <li><a title="Add New Project" href="{{ route('projectmanagement.create') }}"><img src="{{asset('img/sidebar/add-new-service.png')}}" alt="" style="padding: 8px;"><span class="mini-click-non">Add New Project</span></a></li>
+                            <li><a title="Add New Project" href="{{ route('projectmanagement.index') }}"><img src="{{asset('img/sidebar/show-all-audit.png')}}" alt="" style="padding: 8px;"><span class="mini-click-non">Project Info</span></a></li>
                         </ul>
                     </li>
                     <!-- <li><a title="Landing Page" href="#" aria-expanded="false"><i class="fa fa-bookmark icon-wrap sub-icon-mg" aria-hidden="true"></i> <span class="mini-click-non">Landing Page</span></a></li> -->

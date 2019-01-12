@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAuditInfosTable extends Migration
+class AddAmcToProjectManagements extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class CreateAuditInfosTable extends Migration
      */
     public function up()
     {
-        Schema::create('audit_infos', function (Blueprint $table) {
-            $table->increments('id');
-            $table->timestamps();
+        Schema::table('project_managements', function (Blueprint $table) {
+            $table->string('amc')->default('no')->after('gap_assessment');
         });
     }
 
@@ -26,6 +25,8 @@ class CreateAuditInfosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('audit_infos');
+        Schema::table('project_managements', function (Blueprint $table) {
+            //
+        });
     }
 }
